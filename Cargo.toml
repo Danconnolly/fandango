@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Daniel"]
 license = "MIT"
 description = "Async Rust library for Bitcoin SV node communication"
-repository = "https://github.com/yourusername/fandango"
+repository = "https://github.com/Danconnolly/fandango"
 keywords = ["bitcoin", "bsv", "bitcoinsv", "blockchain", "rpc"]
 categories = ["api-bindings", "asynchronous", "cryptocurrency"]
 
