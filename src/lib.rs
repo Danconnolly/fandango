@@ -37,5 +37,5 @@ mod error;
 mod rest;
 mod rpc;
 
-pub use client::SvNodeClient;
+pub use client::{NodeClient, SvNodeClient};
 pub use error::{Error, Result};

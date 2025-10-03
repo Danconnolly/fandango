@@ -3,7 +3,33 @@
 use crate::error::Result;
 use crate::rest::RestClient;
 use crate::rpc::RpcClient;
+use async_trait::async_trait;
 use bitcoinsv::bitcoin::{Block, BlockHeader};
+
+/// Trait for communicating with a Bitcoin node.
+///
+/// This trait defines the common interface for interacting with Bitcoin nodes,
+/// allowing different client implementations (e.g., SV node, Teranode) to provide
+/// the same functionality.
+#[async_trait]
+pub trait NodeClient {
+    /// Returns the hash of the best (tip) block in the longest blockchain.
+    async fn get_best_block_hash(&self) -> Result<String>;
+
+    /// Returns the block header for the specified block hash.
+    ///
+    /// # Arguments
+    ///
+    /// * `block_hash` - The hash of the block to retrieve
+    async fn get_block_header(&self, block_hash: &str) -> Result<BlockHeader>;
+
+    /// Returns the complete block data for the specified block hash.
+    ///
+    /// # Arguments
+    ///
+    /// * `block_hash` - The hash of the block to retrieve
+    async fn get_block(&self, block_hash: &str) -> Result<Block>;
+}
 
 /// Client for communicating with a Bitcoin SV node.
 ///
@@ -114,6 +140,21 @@ impl SvNodeClient {
     /// # }
     /// ```
     pub async fn get_block(&self, block_hash: &str) -> Result<Block> {
+        self.rest.get_block(block_hash).await
+    }
+}
+
+#[async_trait]
+impl NodeClient for SvNodeClient {
+    async fn get_best_block_hash(&self) -> Result<String> {
+        self.rpc.get_best_block_hash().await
+    }
+
+    async fn get_block_header(&self, block_hash: &str) -> Result<BlockHeader> {
+        self.rpc.get_block_header(block_hash).await
+    }
+
+    async fn get_block(&self, block_hash: &str) -> Result<Block> {
         self.rest.get_block(block_hash).await
     }
 }
