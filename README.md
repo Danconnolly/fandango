@@ -43,12 +43,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Best block hash: {}", best_hash);
 
     // Get the block header
-    let header = client.get_block_header(&best_hash).await?;
+    let header = client.get_block_header(&best_hash.to_string()).await?;
     println!("Block version: {}", header.version());
     println!("Block timestamp: {}", header.timestamp());
 
     // Get the complete block (uses REST API for efficiency)
-    let block = client.get_block(&best_hash).await?;
+    let block = client.get_block(&best_hash.to_string()).await?;
     println!("Number of transactions: {}", block.num_tx);
 
     Ok(())
@@ -61,11 +61,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 Returns the hash of the best (tip) block in the longest blockchain.
 
-**Returns:** `Result<String>`
+**Returns:** `Result<bitcoinsv::bitcoin::BlockHash>`
 
 **Example:**
 ```rust
 let hash = client.get_best_block_hash().await?;
+println!("Best block: {}", hash);
 ```
 
 ### `get_block_header(block_hash: &str)`
@@ -79,7 +80,8 @@ Returns the block header for a specified block hash. Uses the JSON-RPC interface
 
 **Example:**
 ```rust
-let header = client.get_block_header(&hash).await?;
+let hash = client.get_best_block_hash().await?;
+let header = client.get_block_header(&hash.to_string()).await?;
 println!("Block difficulty: {}", header.difficulty());
 ```
 
@@ -94,7 +96,8 @@ Returns the complete block data for a specified block hash. Uses the REST API in
 
 **Example:**
 ```rust
-let block = client.get_block(&hash).await?;
+let hash = client.get_best_block_hash().await?;
+let block = client.get_block(&hash.to_string()).await?;
 for tx in block.tx_iter() {
     // Process transactions
 }
@@ -190,7 +193,8 @@ The library provides detailed error types via the `Error` enum:
 ```rust
 use fandango::{SvNodeClient, Error};
 
-match client.get_block(&hash).await {
+let hash = client.get_best_block_hash().await?;
+match client.get_block(&hash.to_string()).await {
     Ok(block) => println!("Got block with {} transactions", block.num_tx),
     Err(Error::Rpc { code, message }) => {
         eprintln!("RPC error {}: {}", code, message);

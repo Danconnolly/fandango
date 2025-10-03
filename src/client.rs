@@ -4,7 +4,7 @@ use crate::error::Result;
 use crate::rest::RestClient;
 use crate::rpc::RpcClient;
 use async_trait::async_trait;
-use bitcoinsv::bitcoin::{Block, BlockHeader};
+use bitcoinsv::bitcoin::{Block, BlockHash, BlockHeader};
 
 /// Trait for communicating with a Bitcoin node.
 ///
@@ -14,7 +14,7 @@ use bitcoinsv::bitcoin::{Block, BlockHeader};
 #[async_trait]
 pub trait NodeClient {
     /// Returns the hash of the best (tip) block in the longest blockchain.
-    async fn get_best_block_hash(&self) -> Result<String>;
+    async fn get_best_block_hash(&self) -> Result<BlockHash>;
 
     /// Returns the block header for the specified block hash.
     ///
@@ -92,7 +92,7 @@ impl SvNodeClient {
     /// # Ok(())
     /// # }
     /// ```
-    pub async fn get_best_block_hash(&self) -> Result<String> {
+    pub async fn get_best_block_hash(&self) -> Result<BlockHash> {
         self.rpc.get_best_block_hash().await
     }
 
@@ -110,7 +110,7 @@ impl SvNodeClient {
     /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
     /// let hash = client.get_best_block_hash().await?;
-    /// let header = client.get_block_header(&hash).await?;
+    /// let header = client.get_block_header(&hash.to_string()).await?;
     /// # Ok(())
     /// # }
     /// ```
@@ -134,7 +134,7 @@ impl SvNodeClient {
     /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
     /// let hash = client.get_best_block_hash().await?;
-    /// let block = client.get_block(&hash).await?;
+    /// let block = client.get_block(&hash.to_string()).await?;
     /// println!("Block has {} transactions", block.num_tx);
     /// # Ok(())
     /// # }
@@ -146,7 +146,7 @@ impl SvNodeClient {
 
 #[async_trait]
 impl NodeClient for SvNodeClient {
-    async fn get_best_block_hash(&self) -> Result<String> {
+    async fn get_best_block_hash(&self) -> Result<BlockHash> {
         self.rpc.get_best_block_hash().await
     }
 

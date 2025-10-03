@@ -1,7 +1,7 @@
 //! JSON-RPC client implementation for Bitcoin SV nodes.
 
 use crate::error::{Error, Result};
-use bitcoinsv::bitcoin::{BlockHeader, Encodable};
+use bitcoinsv::bitcoin::{BlockHash, BlockHeader, Encodable};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -92,8 +92,11 @@ impl RpcClient {
     }
 
     /// Gets the best block hash from the node
-    pub async fn get_best_block_hash(&self) -> Result<String> {
-        self.call("getbestblockhash", vec![]).await
+    pub async fn get_best_block_hash(&self) -> Result<BlockHash> {
+        let hash_str: String = self.call("getbestblockhash", vec![]).await?;
+        let mut bytes = hex::decode(&hash_str)?;
+        bytes.reverse(); // Bitcoin hashes are in reverse byte order
+        Ok(BlockHash::from_slice(&bytes))
     }
 
     /// Gets the block header for a given block hash

@@ -47,9 +47,10 @@ async fn test_get_best_block_hash() {
     );
 
     let hash = result.unwrap();
-    assert_eq!(hash.len(), 64, "Block hash should be 64 hex characters");
+    let hash_str = hash.to_string();
+    assert_eq!(hash_str.len(), 64, "Block hash should be 64 hex characters");
     assert!(
-        hash.chars().all(|c| c.is_ascii_hexdigit()),
+        hash_str.chars().all(|c| c.is_ascii_hexdigit()),
         "Block hash should only contain hex characters"
     );
 
@@ -68,7 +69,7 @@ async fn test_get_block_header() {
         .expect("Failed to get best block hash");
 
     // Then get its header
-    let result = client.get_block_header(&hash).await;
+    let result = client.get_block_header(&hash.to_string()).await;
     assert!(
         result.is_ok(),
         "Failed to get block header: {:?}",
@@ -102,7 +103,7 @@ async fn test_get_block() {
         .expect("Failed to get best block hash");
 
     // Then get the complete block
-    let result = client.get_block(&hash).await;
+    let result = client.get_block(&hash.to_string()).await;
     assert!(result.is_ok(), "Failed to get block: {:?}", result.err());
 
     let block = result.unwrap();
@@ -131,14 +132,19 @@ async fn test_block_header_consistency() {
         .await
         .expect("Failed to get best block hash");
 
+    let hash_str = hash.to_string();
+
     // Get header directly
     let header = client
-        .get_block_header(&hash)
+        .get_block_header(&hash_str)
         .await
         .expect("Failed to get block header");
 
     // Get block and extract header
-    let block = client.get_block(&hash).await.expect("Failed to get block");
+    let block = client
+        .get_block(&hash_str)
+        .await
+        .expect("Failed to get block");
     let block_header = block
         .header()
         .expect("Failed to get block header from block");
