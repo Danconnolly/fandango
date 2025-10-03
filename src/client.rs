@@ -109,7 +109,7 @@ impl SvNodeClient {
     /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
     /// let hash = client.get_best_block_hash().await?;
     /// let block = client.get_block(&hash).await?;
-    /// println!("Block has {} transactions", block.txdata.len());
+    /// println!("Block has {} transactions", block.num_tx);
     /// # Ok(())
     /// # }
     /// ```

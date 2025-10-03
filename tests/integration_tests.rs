@@ -108,7 +108,7 @@ async fn test_get_block() {
     let block = result.unwrap();
 
     // Verify block properties
-    let header = block.header();
+    let header = block.header().expect("Failed to get block header");
     println!("Block header hash: {:?}", header.hash());
     println!("Number of transactions: {}", block.num_tx);
 
@@ -139,7 +139,9 @@ async fn test_block_header_consistency() {
 
     // Get block and extract header
     let block = client.get_block(&hash).await.expect("Failed to get block");
-    let block_header = block.header();
+    let block_header = block
+        .header()
+        .expect("Failed to get block header from block");
 
     // The headers should be identical
     assert_eq!(

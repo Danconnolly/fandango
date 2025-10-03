@@ -14,7 +14,7 @@ categories = ["api-bindings", "asynchronous", "cryptocurrency"]
 tokio = { version = "1.35", features = ["full"] }
 
 # Bitcoin SV types and utilities
-bitcoinsv = "0.3"
+bitcoinsv = "0.4"
 
 # HTTP client for REST and JSON-RPC
 reqwest = { version = "0.11", features = ["json"] }
