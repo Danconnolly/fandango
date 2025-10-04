@@ -25,7 +25,6 @@ Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
 bitcoinsv-rpc = "2.0"
-tokio = { version = "1", features = ["full"] }
 ```
 
 ## Quick Start
