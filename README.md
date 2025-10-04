@@ -4,6 +4,8 @@
 [![Documentation](https://docs.rs/bitcoinsv-rpc/badge.svg)](https://docs.rs/bitcoinsv-rpc)
 [![License](https://img.shields.io/crates/l/bitcoinsv-rpc.svg)](./LICENSE)
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Danconnolly/rust-bitcoinsv-rpc?utm_source=oss&utm_medium=github&utm_campaign=Danconnolly%2Frust-bitcoinsv-rpc&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
 An async Rust library for interfacing with Bitcoin SV nodes via their JSON-RPC API and REST interface.
 See the documentation at https://docs.rs/bitcoinsv-rpc/latest/bitcoinsv_rpc/.
 

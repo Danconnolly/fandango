@@ -209,14 +209,13 @@ async fn test_multiple_concurrent_requests() {
 #[ignore] // Run with: cargo test --test integration_tests -- --ignored
 async fn test_error_handling_invalid_hash() {
     use bitcoinsv::bitcoin::BlockHash;
+    use hex::FromHex;
 
     let client = create_test_client();
 
     // Try to get a block with an invalid hash
     let invalid_hash_str = "0000000000000000000000000000000000000000000000000000000000000000";
-    let mut bytes = hex::decode(invalid_hash_str).expect("Failed to decode hash");
-    bytes.reverse();
-    let invalid_hash = BlockHash::from_slice(&bytes);
+    let invalid_hash = BlockHash::from_hex(invalid_hash_str).expect("Failed to parse hash");
     let result = client.get_block(&invalid_hash).await;
 
     // This should fail
