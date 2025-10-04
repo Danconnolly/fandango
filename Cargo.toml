@@ -7,7 +7,7 @@ license = "MIT"
 description = "Async Rust library for Bitcoin SV node communication"
 repository = "https://github.com/Danconnolly/rust-bitcoinsv-rpc"
 keywords = ["bitcoin", "bsv", "bitcoinsv", "blockchain", "rpc"]
-categories = ["api-bindings", "asynchronous", "cryptocurrency"]
+categories = ["api-bindings", "asynchronous"]
 
 [dependencies]
 # Async runtime
