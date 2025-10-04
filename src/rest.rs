@@ -5,6 +5,7 @@ use bitcoinsv::bitcoin::{Block, BlockHash};
 use reqwest::Client;
 
 /// Client for REST API communication with Bitcoin SV node
+#[derive(Clone)]
 pub(crate) struct RestClient {
     base_url: String,
     client: Client,

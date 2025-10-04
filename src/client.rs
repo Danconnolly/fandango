@@ -34,6 +34,8 @@ pub trait NodeClient {
 /// Client for communicating with a Bitcoin SV node.
 ///
 /// This client manages both JSON-RPC and REST API connections to a Bitcoin SV node.
+/// The client is cloneable and safe for concurrent use - clones share the same underlying
+/// connection pool for efficient resource usage.
 ///
 /// # Example
 ///
@@ -51,9 +53,17 @@ pub trait NodeClient {
 ///     let hash = client.get_best_block_hash().await?;
 ///     println!("Best block: {}", hash);
 ///
+///     // Clone the client for concurrent use
+///     let client2 = client.clone();
+///     let (hash1, hash2) = tokio::join!(
+///         client.get_best_block_hash(),
+///         client2.get_best_block_hash(),
+///     );
+///
 ///     Ok(())
 /// }
 /// ```
+#[derive(Clone)]
 pub struct SvNodeClient {
     rpc: RpcClient,
     rest: RestClient,

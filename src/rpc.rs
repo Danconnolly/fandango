@@ -32,6 +32,7 @@ struct RpcError {
 }
 
 /// Client for JSON-RPC communication with Bitcoin SV node
+#[derive(Clone)]
 pub(crate) struct RpcClient {
     url: String,
     client: Client,

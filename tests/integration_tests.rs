@@ -174,23 +174,35 @@ async fn test_multiple_concurrent_requests() {
         .await
         .expect("Failed to get best block hash");
 
-    // Make multiple concurrent requests
-    let futures = vec![
-        client.get_best_block_hash(),
-        client.get_best_block_hash(),
-        client.get_best_block_hash(),
-    ];
+    // Clone the client for concurrent use
+    let client2 = client.clone();
+    let client3 = client.clone();
 
-    let results = futures::future::join_all(futures).await;
+    // Make multiple concurrent requests using cloned clients
+    let (result1, result2, result3) = tokio::join!(
+        client.get_best_block_hash(),
+        client2.get_best_block_hash(),
+        client3.get_best_block_hash(),
+    );
 
     // All should succeed
-    for result in results {
-        assert!(
-            result.is_ok(),
-            "Concurrent request failed: {:?}",
-            result.err()
-        );
-    }
+    assert!(
+        result1.is_ok(),
+        "Concurrent request 1 failed: {:?}",
+        result1.err()
+    );
+    assert!(
+        result2.is_ok(),
+        "Concurrent request 2 failed: {:?}",
+        result2.err()
+    );
+    assert!(
+        result3.is_ok(),
+        "Concurrent request 3 failed: {:?}",
+        result3.err()
+    );
+
+    println!("All concurrent requests with cloned clients succeeded");
 }
 
 #[tokio::test]
