@@ -36,7 +36,7 @@ hex = "0.4"
 # Testing utilities
 tokio-test = "0.4"
 mockito = "1.7"
-wiremock = "0.5"
+wiremock = "0.6"
 
 # Environment variables for integration tests
 dotenvy = "0.15"
