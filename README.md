@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/crates/l/bitcoinsv-rpc.svg)](./LICENSE)
 
 An async Rust library for interfacing with Bitcoin SV nodes via their JSON-RPC API and REST interface.
+See the documentation at (https://docs.rs/bitcoinsv-rpc/latest/bitcoinsv_rpc/).
 
 ## Features
 
@@ -13,6 +14,9 @@ An async Rust library for interfacing with Bitcoin SV nodes via their JSON-RPC A
 - ⚡ **REST API** interface for efficient binary block retrieval
 - 🔧 **Type-safe** integration with the [bitcoinsv](https://crates.io/crates/bitcoinsv) crate
 - ✅ **Tested** with comprehensive unit and integration tests
+
+Only a very limited number of functions have been implemented, to meet my immediate needs. If you need additional functions, 
+please submit a pull request (preferred) or a ticket (I cant guarentee a quick response).
 
 ## Installation
 
