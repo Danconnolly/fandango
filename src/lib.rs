@@ -1,4 +1,4 @@
-//! # Fandango
+//! # bitcoinsv-rpc
 //!
 //! Async Rust library for Bitcoin SV node communication.
 //!
@@ -15,7 +15,7 @@
 //! ## Example
 //!
 //! ```no_run
-//! use fandango::{NodeClient, SvNodeClient};
+//! use bitcoinsv_rpc::{NodeClient, SvNodeClient};
 //!
 //! #[tokio::main]
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {

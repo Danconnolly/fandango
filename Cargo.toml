@@ -1,11 +1,11 @@
 [package]
-name = "fandango"
-version = "0.1.0"
+name = "bitcoinsv-rpc"
+version = "1.0.0"
 edition = "2021"
 authors = ["Daniel"]
 license = "MIT"
 description = "Async Rust library for Bitcoin SV node communication"
-repository = "https://github.com/Danconnolly/fandango"
+repository = "https://github.com/Danconnolly/rust-bitcoinsv-rpc"
 keywords = ["bitcoin", "bsv", "bitcoinsv", "blockchain", "rpc"]
 categories = ["api-bindings", "asynchronous", "cryptocurrency"]
 
@@ -45,7 +45,7 @@ dotenvy = "0.15"
 futures = "0.3"
 
 [lib]
-name = "fandango"
+name = "bitcoinsv_rpc"
 path = "src/lib.rs"
 
 [[test]]

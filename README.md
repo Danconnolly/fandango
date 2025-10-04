@@ -1,8 +1,8 @@
-# Fandango
+# rust-bitcoinsv-rpc
 
-[![Crates.io](https://img.shields.io/crates/v/fandango.svg)](https://crates.io/crates/fandango)
-[![Documentation](https://docs.rs/fandango/badge.svg)](https://docs.rs/fandango)
-[![License](https://img.shields.io/crates/l/fandango.svg)](./LICENSE)
+[![Crates.io](https://img.shields.io/crates/v/bitcoinsv-rpc.svg)](https://crates.io/crates/bitcoinsv-rpc)
+[![Documentation](https://docs.rs/bitcoinsv-rpc/badge.svg)](https://docs.rs/bitcoinsv-rpc)
+[![License](https://img.shields.io/crates/l/bitcoinsv-rpc.svg)](./LICENSE)
 
 An async Rust library for interfacing with Bitcoin SV nodes via their JSON-RPC API and REST interface.
 
@@ -20,14 +20,14 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-fandango = "0.1"
+bitcoinsv-rpc = "1.0"
 tokio = { version = "1", features = ["full"] }
 ```
 
 ## Quick Start
 
 ```rust
-use fandango::{NodeClient, SvNodeClient};
+use bitcoinsv_rpc::{NodeClient, SvNodeClient};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -110,7 +110,7 @@ for tx in block.tx_iter() {
 The client requires a node URL and optionally authentication credentials:
 
 ```rust
-use fandango::{NodeClient, SvNodeClient};
+use bitcoinsv_rpc::{NodeClient, SvNodeClient};
 
 // Without authentication (for nodes with rpcauth disabled)
 let client = SvNodeClient::new("http://localhost:8332", None, None)?;
@@ -193,7 +193,7 @@ cargo test --test integration -- --ignored
 The library provides detailed error types via the `Error` enum:
 
 ```rust
-use fandango::{Error, NodeClient, SvNodeClient};
+use bitcoinsv_rpc::{Error, NodeClient, SvNodeClient};
 
 let hash = client.get_best_block_hash().await?;
 match client.get_block(&hash).await {
@@ -226,7 +226,7 @@ The `NodeClient` trait defines a common interface for communicating with Bitcoin
 **Note:** You must import the `NodeClient` trait to use its methods on `SvNodeClient`:
 
 ```rust
-use fandango::{NodeClient, SvNodeClient};
+use bitcoinsv_rpc::{NodeClient, SvNodeClient};
 ```
 
 ### Why REST for Blocks?

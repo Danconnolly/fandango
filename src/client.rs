@@ -38,7 +38,7 @@ pub trait NodeClient {
 /// # Example
 ///
 /// ```no_run
-/// use fandango::{NodeClient, SvNodeClient};
+/// use bitcoinsv_rpc::{NodeClient, SvNodeClient};
 ///
 /// #[tokio::main]
 /// async fn main() -> Result<(), Box<dyn std::error::Error>> {

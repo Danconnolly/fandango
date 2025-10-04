@@ -1,4 +1,4 @@
-//! Integration tests for fandango library
+//! Integration tests for bitcoinsv-rpc library
 //!
 //! These tests require a running Bitcoin SV testnet node.
 //!
@@ -17,7 +17,7 @@
 //! cargo test --test integration_tests -- --ignored
 //! ```
 
-use fandango::{NodeClient, SvNodeClient};
+use bitcoinsv_rpc::{NodeClient, SvNodeClient};
 
 /// Helper to get node connection details from environment
 fn get_node_config() -> (String, Option<String>, Option<String>) {

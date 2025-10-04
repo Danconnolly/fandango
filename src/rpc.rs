@@ -64,7 +64,7 @@ impl RpcClient {
     ) -> Result<T> {
         let request = RpcRequest {
             jsonrpc: "1.0".to_string(),
-            id: "fandango".to_string(),
+            id: "bitcoinsv-rpc".to_string(),
             method: method.to_string(),
             params,
         };
