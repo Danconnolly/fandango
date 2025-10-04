@@ -1,7 +1,7 @@
 //! REST API client implementation for Bitcoin SV nodes.
 
 use crate::error::{Error, Result};
-use bitcoinsv::bitcoin::Block;
+use bitcoinsv::bitcoin::{Block, BlockHash};
 use reqwest::Client;
 
 /// Client for REST API communication with Bitcoin SV node
@@ -31,7 +31,7 @@ impl RestClient {
     /// Gets a block in binary format from the REST API
     ///
     /// Uses the endpoint: GET /rest/block/<BLOCK-HASH>.bin
-    pub async fn get_block(&self, block_hash: &str) -> Result<Block> {
+    pub async fn get_block(&self, block_hash: &BlockHash) -> Result<Block> {
         let url = format!("{}/rest/block/{}.bin", self.base_url, block_hash);
 
         let response = self.client.get(&url).send().await?;

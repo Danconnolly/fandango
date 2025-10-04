@@ -21,14 +21,14 @@ pub trait NodeClient {
     /// # Arguments
     ///
     /// * `block_hash` - The hash of the block to retrieve
-    async fn get_block_header(&self, block_hash: &str) -> Result<BlockHeader>;
+    async fn get_block_header(&self, block_hash: &BlockHash) -> Result<BlockHeader>;
 
     /// Returns the complete block data for the specified block hash.
     ///
     /// # Arguments
     ///
     /// * `block_hash` - The hash of the block to retrieve
-    async fn get_block(&self, block_hash: &str) -> Result<Block>;
+    async fn get_block(&self, block_hash: &BlockHash) -> Result<Block>;
 }
 
 /// Client for communicating with a Bitcoin SV node.
@@ -110,11 +110,11 @@ impl SvNodeClient {
     /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
     /// let hash = client.get_best_block_hash().await?;
-    /// let header = client.get_block_header(&hash.to_string()).await?;
+    /// let header = client.get_block_header(&hash).await?;
     /// # Ok(())
     /// # }
     /// ```
-    pub async fn get_block_header(&self, block_hash: &str) -> Result<BlockHeader> {
+    pub async fn get_block_header(&self, block_hash: &BlockHash) -> Result<BlockHeader> {
         self.rpc.get_block_header(block_hash).await
     }
 
@@ -134,12 +134,12 @@ impl SvNodeClient {
     /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
     /// let hash = client.get_best_block_hash().await?;
-    /// let block = client.get_block(&hash.to_string()).await?;
+    /// let block = client.get_block(&hash).await?;
     /// println!("Block has {} transactions", block.num_tx);
     /// # Ok(())
     /// # }
     /// ```
-    pub async fn get_block(&self, block_hash: &str) -> Result<Block> {
+    pub async fn get_block(&self, block_hash: &BlockHash) -> Result<Block> {
         self.rest.get_block(block_hash).await
     }
 }
@@ -150,11 +150,11 @@ impl NodeClient for SvNodeClient {
         self.rpc.get_best_block_hash().await
     }
 
-    async fn get_block_header(&self, block_hash: &str) -> Result<BlockHeader> {
+    async fn get_block_header(&self, block_hash: &BlockHash) -> Result<BlockHeader> {
         self.rpc.get_block_header(block_hash).await
     }
 
-    async fn get_block(&self, block_hash: &str) -> Result<Block> {
+    async fn get_block(&self, block_hash: &BlockHash) -> Result<Block> {
         self.rest.get_block(block_hash).await
     }
 }

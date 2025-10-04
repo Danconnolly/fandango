@@ -43,12 +43,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Best block hash: {}", best_hash);
 
     // Get the block header
-    let header = client.get_block_header(&best_hash.to_string()).await?;
+    let header = client.get_block_header(&best_hash).await?;
     println!("Block version: {}", header.version());
     println!("Block timestamp: {}", header.timestamp());
 
     // Get the complete block (uses REST API for efficiency)
-    let block = client.get_block(&best_hash.to_string()).await?;
+    let block = client.get_block(&best_hash).await?;
     println!("Number of transactions: {}", block.num_tx);
 
     Ok(())
@@ -69,7 +69,7 @@ let hash = client.get_best_block_hash().await?;
 println!("Best block: {}", hash);
 ```
 
-### `get_block_header(block_hash: &str)`
+### `get_block_header(block_hash: &BlockHash)`
 
 Returns the block header for a specified block hash. Uses the JSON-RPC interface.
 
@@ -81,11 +81,11 @@ Returns the block header for a specified block hash. Uses the JSON-RPC interface
 **Example:**
 ```rust
 let hash = client.get_best_block_hash().await?;
-let header = client.get_block_header(&hash.to_string()).await?;
+let header = client.get_block_header(&hash).await?;
 println!("Block difficulty: {}", header.difficulty());
 ```
 
-### `get_block(block_hash: &str)`
+### `get_block(block_hash: &BlockHash)`
 
 Returns the complete block data for a specified block hash. Uses the REST API in binary mode for efficient data transfer.
 
@@ -97,7 +97,7 @@ Returns the complete block data for a specified block hash. Uses the REST API in
 **Example:**
 ```rust
 let hash = client.get_best_block_hash().await?;
-let block = client.get_block(&hash.to_string()).await?;
+let block = client.get_block(&hash).await?;
 for tx in block.tx_iter() {
     // Process transactions
 }
@@ -194,7 +194,7 @@ The library provides detailed error types via the `Error` enum:
 use fandango::{SvNodeClient, Error};
 
 let hash = client.get_best_block_hash().await?;
-match client.get_block(&hash.to_string()).await {
+match client.get_block(&hash).await {
     Ok(block) => println!("Got block with {} transactions", block.num_tx),
     Err(Error::Rpc { code, message }) => {
         eprintln!("RPC error {}: {}", code, message);

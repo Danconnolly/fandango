@@ -69,7 +69,7 @@ async fn test_get_block_header() {
         .expect("Failed to get best block hash");
 
     // Then get its header
-    let result = client.get_block_header(&hash.to_string()).await;
+    let result = client.get_block_header(&hash).await;
     assert!(
         result.is_ok(),
         "Failed to get block header: {:?}",
@@ -103,7 +103,7 @@ async fn test_get_block() {
         .expect("Failed to get best block hash");
 
     // Then get the complete block
-    let result = client.get_block(&hash.to_string()).await;
+    let result = client.get_block(&hash).await;
     assert!(result.is_ok(), "Failed to get block: {:?}", result.err());
 
     let block = result.unwrap();
@@ -132,19 +132,14 @@ async fn test_block_header_consistency() {
         .await
         .expect("Failed to get best block hash");
 
-    let hash_str = hash.to_string();
-
     // Get header directly
     let header = client
-        .get_block_header(&hash_str)
+        .get_block_header(&hash)
         .await
         .expect("Failed to get block header");
 
     // Get block and extract header
-    let block = client
-        .get_block(&hash_str)
-        .await
-        .expect("Failed to get block");
+    let block = client.get_block(&hash).await.expect("Failed to get block");
     let block_header = block
         .header()
         .expect("Failed to get block header from block");
@@ -201,11 +196,16 @@ async fn test_multiple_concurrent_requests() {
 #[tokio::test]
 #[ignore] // Run with: cargo test --test integration_tests -- --ignored
 async fn test_error_handling_invalid_hash() {
+    use bitcoinsv::bitcoin::BlockHash;
+
     let client = create_test_client();
 
     // Try to get a block with an invalid hash
-    let invalid_hash = "0000000000000000000000000000000000000000000000000000000000000000";
-    let result = client.get_block(invalid_hash).await;
+    let invalid_hash_str = "0000000000000000000000000000000000000000000000000000000000000000";
+    let mut bytes = hex::decode(invalid_hash_str).expect("Failed to decode hash");
+    bytes.reverse();
+    let invalid_hash = BlockHash::from_slice(&bytes);
+    let result = client.get_block(&invalid_hash).await;
 
     // This should fail
     assert!(result.is_err(), "Getting invalid block should fail");

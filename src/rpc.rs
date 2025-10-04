@@ -100,7 +100,7 @@ impl RpcClient {
     }
 
     /// Gets the block header for a given block hash
-    pub async fn get_block_header(&self, block_hash: &str) -> Result<BlockHeader> {
+    pub async fn get_block_header(&self, block_hash: &BlockHash) -> Result<BlockHeader> {
         // Request verbose=false to get hex-encoded header
         let hex: String = self
             .call(
