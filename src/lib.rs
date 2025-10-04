@@ -15,7 +15,7 @@
 //! ## Example
 //!
 //! ```no_run
-//! use fandango::SvNodeClient;
+//! use fandango::{NodeClient, SvNodeClient};
 //!
 //! #[tokio::main]
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {

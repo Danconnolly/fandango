@@ -27,7 +27,7 @@ tokio = { version = "1", features = ["full"] }
 ## Quick Start
 
 ```rust
-use fandango::SvNodeClient;
+use fandango::{NodeClient, SvNodeClient};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -110,6 +110,8 @@ for tx in block.tx_iter() {
 The client requires a node URL and optionally authentication credentials:
 
 ```rust
+use fandango::{NodeClient, SvNodeClient};
+
 // Without authentication (for nodes with rpcauth disabled)
 let client = SvNodeClient::new("http://localhost:8332", None, None)?;
 
@@ -191,7 +193,7 @@ cargo test --test integration -- --ignored
 The library provides detailed error types via the `Error` enum:
 
 ```rust
-use fandango::{SvNodeClient, Error};
+use fandango::{Error, NodeClient, SvNodeClient};
 
 let hash = client.get_best_block_hash().await?;
 match client.get_block(&hash).await {
@@ -212,10 +214,20 @@ match client.get_block(&hash).await {
 
 The library is structured into several modules:
 
-- **`client`**: Main `SvNodeClient` struct providing the public API
+- **`client`**: Main `SvNodeClient` struct and `NodeClient` trait
 - **`rpc`**: JSON-RPC client implementation for RPC methods
 - **`rest`**: REST API client for efficient binary block retrieval
 - **`error`**: Error types and Result type alias
+
+### The NodeClient Trait
+
+The `NodeClient` trait defines a common interface for communicating with Bitcoin nodes. This abstraction allows different client implementations (e.g., SV node, Teranode) to provide the same functionality, enabling easy switching between node types without changing your application code.
+
+**Note:** You must import the `NodeClient` trait to use its methods on `SvNodeClient`:
+
+```rust
+use fandango::{NodeClient, SvNodeClient};
+```
 
 ### Why REST for Blocks?
 

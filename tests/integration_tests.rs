@@ -17,7 +17,7 @@
 //! cargo test --test integration_tests -- --ignored
 //! ```
 
-use fandango::SvNodeClient;
+use fandango::{NodeClient, SvNodeClient};
 
 /// Helper to get node connection details from environment
 fn get_node_config() -> (String, Option<String>, Option<String>) {

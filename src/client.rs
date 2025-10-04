@@ -38,7 +38,7 @@ pub trait NodeClient {
 /// # Example
 ///
 /// ```no_run
-/// use fandango::SvNodeClient;
+/// use fandango::{NodeClient, SvNodeClient};
 ///
 /// #[tokio::main]
 /// async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -76,71 +76,6 @@ impl SvNodeClient {
         let rest = RestClient::new(url)?;
 
         Ok(Self { rpc, rest })
-    }
-
-    /// Returns the hash of the best (tip) block in the longest blockchain.
-    ///
-    /// # Example
-    ///
-    /// ```no_run
-    /// # use fandango::SvNodeClient;
-    /// # #[tokio::main]
-    /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
-    /// let hash = client.get_best_block_hash().await?;
-    /// println!("Best block hash: {}", hash);
-    /// # Ok(())
-    /// # }
-    /// ```
-    pub async fn get_best_block_hash(&self) -> Result<BlockHash> {
-        self.rpc.get_best_block_hash().await
-    }
-
-    /// Returns the block header for the specified block hash.
-    ///
-    /// # Arguments
-    ///
-    /// * `block_hash` - The hash of the block to retrieve
-    ///
-    /// # Example
-    ///
-    /// ```no_run
-    /// # use fandango::SvNodeClient;
-    /// # #[tokio::main]
-    /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
-    /// let hash = client.get_best_block_hash().await?;
-    /// let header = client.get_block_header(&hash).await?;
-    /// # Ok(())
-    /// # }
-    /// ```
-    pub async fn get_block_header(&self, block_hash: &BlockHash) -> Result<BlockHeader> {
-        self.rpc.get_block_header(block_hash).await
-    }
-
-    /// Returns the complete block data for the specified block hash.
-    ///
-    /// This method uses the REST API in binary mode for efficient data transfer.
-    ///
-    /// # Arguments
-    ///
-    /// * `block_hash` - The hash of the block to retrieve
-    ///
-    /// # Example
-    ///
-    /// ```no_run
-    /// # use fandango::SvNodeClient;
-    /// # #[tokio::main]
-    /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// # let client = SvNodeClient::new("http://localhost:8332", None, None)?;
-    /// let hash = client.get_best_block_hash().await?;
-    /// let block = client.get_block(&hash).await?;
-    /// println!("Block has {} transactions", block.num_tx);
-    /// # Ok(())
-    /// # }
-    /// ```
-    pub async fn get_block(&self, block_hash: &BlockHash) -> Result<Block> {
-        self.rest.get_block(block_hash).await
     }
 }
 
