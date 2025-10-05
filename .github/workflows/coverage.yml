@@ -23,7 +23,7 @@ jobs:
       run: cargo install cargo-tarpaulin
 
     - name: Generate code coverage
-      run: cargo tarpaulin --out Xml --output-dir ./coverage --run-types Tests,Doctests --all-features -- --include-ignored
+      run: cargo tarpaulin --out Xml --output-dir ./coverage --run-types Tests --run-types Doctests --all-features -- --include-ignored
       env:
         BSV_NODE_URL: ${{ secrets.BSV_NODE_URL }}
         BSV_NODE_USER: ${{ secrets.BSV_NODE_USER }}
