@@ -24,3 +24,21 @@ jobs:
 
     - name: Run cargo fmt
       run: cargo fmt -- --check
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Rust
+      uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921
+      with:
+        toolchain: stable
+
+    - name: Run tests
+      run: cargo test --all-features -- --include-ignored
+      env:
+        BSV_NODE_URL: ${{ secrets.BSV_NODE_URL }}
+        BSV_NODE_USER: ${{ secrets.BSV_NODE_USER }}
+        BSV_NODE_PASSWORD: ${{ secrets.BSV_NODE_PASSWORD }}
