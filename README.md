@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/crates/l/bitcoinsv-rpc.svg)](./LICENSE)
 
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Danconnolly/rust-bitcoinsv-rpc?utm_source=oss&utm_medium=github&utm_campaign=Danconnolly%2Frust-bitcoinsv-rpc&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dab8f7aa53f7448f99c847007cb0d759)](https://app.codacy.com/gh/Danconnolly/rust-bitcoinsv-rpc/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/dab8f7aa53f7448f99c847007cb0d759)](https://app.codacy.com/gh/Danconnolly/rust-bitcoinsv-rpc/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 An async Rust library for interfacing with Bitcoin SV nodes via their JSON-RPC API and REST interface.
 See the documentation at https://docs.rs/bitcoinsv-rpc/latest/bitcoinsv_rpc/.
